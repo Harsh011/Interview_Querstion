@@ -440,8 +440,82 @@ These collection types provide flexibility and efficiency for various use cases 
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>5. what is session storage and local storage</h3>
 </summary>
+Session Storage and Local Storage are both web storage APIs provided by HTML5 to store data on the client's browser. They allow you to save data in key/value pairs and are designed to hold data in a more persistent way compared to cookies, but they differ in terms of scope and duration of storage.
+
+**Session Storage**
+
+**Scope and Duration:**
+
+- Scope: Data is stored only for the duration of the page session. A page session lasts as long as the browser is open, and survives over page reloads and restores.
+- Duration: Data is lost when the page session ends, which means when the browser or tab is closed.
+
+**Usage**:
+
+- It is used for storing data that needs to be available for the duration of a page session, such as temporary states and user inputs.
+
+**Example**:
+
+```js
+// Save data to sessionStorage
+sessionStorage.setItem("key", "value");
+
+// Retrieve data from sessionStorage
+let data = sessionStorage.getItem("key");
+
+// Remove data from sessionStorage
+sessionStorage.removeItem("key");
+
+// Clear all data from sessionStorage
+sessionStorage.clear();
+```
+
+**Local Storage**
+
+**Scope and Duration:**
+
+- Scope: Data is stored with no expiration time and is accessible from any page on the same domain.
+- Duration: Data persists even after the browser is closed and reopened. It remains until it is explicitly deleted by the user or the application.
+
+**Usage**:
+
+- It is used for storing data that needs to persist across sessions, such as user preferences, settings, and other application state information.
+  Example:
+
+```js
+// Save data to localStorage
+localStorage.setItem("key", "value");
+
+// Retrieve data from localStorage
+let data = localStorage.getItem("key");
+
+// Remove data from localStorage
+localStorage.removeItem("key");
+
+// Clear all data from localStorage
+localStorage.clear();
+```
+
+**Key Differences**
+
+1. **Lifetime:**
+
+   - Session Storage: Data is cleared when the page session ends.
+   - Local Storage: Data persists until explicitly deleted.
+
+1. **Scope:**
+
+   - Session Storage: Data is specific to the current tab or window.
+   - Local Storage: Data is shared across all tabs and windows within the same origin.
+
+1. **Use Cases:**
+
+   - Session Storage: Temporary data, form data during navigation, session-specific settings.
+   - Local Storage: User preferences, application settings, persistent state data.
+
+Both storage types offer a straightforward way to manage client-side data without server communication, enhancing performance and user experience by reducing server load and latency.
+
 </details>
 <details>
 <summary>
