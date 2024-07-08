@@ -268,6 +268,273 @@ In this case, even though `#example` has a higher specificity, the paragraph wil
 Understanding specificity helps you write more predictable CSS, troubleshoot styling issues, and ensure the correct styles are applied to elements on your web page.
 
 </details>
+<details>
+<summary>
+<h3>5. What is display property of img</h3>
+</summary>
+
+In CSS, the display property specifies how an element is displayed on the page. For an <img> element, the display property can be used to control its layout behavior. By default, an image has the display property set to inline, but you can change it to other values to achieve different layouts.
+
+**Common `display` Property Values for `<img>`**
+
+1. `display`: `inline` (default):
+
+   - The image is treated as an inline element, meaning it flows along with text and other inline elements.
+   - Example:
+
+   ```js
+   img {
+   display: inline;
+   }
+
+   ```
+
+1. `display`: `block`:
+
+   - The image is treated as a block-level element, meaning it takes up the full width available and starts on a new line.
+   - Example
+
+   ```js
+   img {
+   display: block;
+   }
+
+   ```
+
+   - Use case: When you want the image to behave like a block element, taking up the entire width of its container.
+
+1. `display`: `inline-block:`
+
+   - The image is treated as an inline element but can have block-level properties such as width and height.
+   - Example
+
+   ```js
+   img {
+   display: inline-block;
+   }
+
+   ```
+
+   - Use case: When you need the image to be inline but want to control its dimensions or add padding/margin.
+
+1. `display`: `none`:
+
+   - The image is not displayed at all. It is removed from the document flow.
+   - Example
+
+   ```js
+   img {
+   display: none;
+   }
+
+   ```
+
+   - Use case: When you want to hide the image without removing it from the HTML.
+
+**Examples of `display` Property with Images**
+
+`display`: `inline` (Default)
+
+```js
+<p>This is some text <img src="image.jpg" alt="Image"> with an inline image.</p>
+
+```
+
+The image will flow along with the text.
+
+`display`: `block`
+
+```js
+<p>This is some text.</p>
+<img src="image.jpg" alt="Image" style="display: block;">
+<p>This is more text after the block image.</p>
+
+```
+
+The image will start on a new line and take up the full width of its container.
+
+`display`:` inline-block`
+
+```js
+<p>This is some text <img src="image.jpg" alt="Image" style="display: inline-block; width: 100px; height: 100px;"> with an inline-block image.</p>
+
+```
+
+The image will be inline but you can control its dimensions.
+
+`display`: `none`
+
+```js
+<p>This is some text.</p>
+<img src="image.jpg" alt="Image" style="display: none;">
+<p>This is more text where the image would have been.</p>
+
+```
+
+The image will not be displayed.
+
+**Other Values**
+
+In addition to the common values, the display property can take many other values (e.g., `flex, grid, table,` etc.), but these are less commonly used directly on images. Instead, they are more often applied to the containers or parents of images to control the overall layout.
+
+Understanding how the display property affects an image helps you create more flexible and responsive web designs.
+
+</details>
+</details>
+<details>
+<summary>
+<h3>6. What is Position Property</h3>
+</summary>
+
+The position property in CSS specifies how an element is positioned in the document. It can take several values, each affecting the element's layout in different ways. Here are the main values of the position property and their effects:
+
+**position: static**
+
+- Default value: This is the default positioning for all elements.
+- Behavior: Elements are positioned according to the normal document flow. top, right, bottom, and left properties have no effect.
+- Use case: Default positioning; no need for special layout requirements.
+
+```js
+div {
+  position: static;
+}
+
+```
+
+**`position: relative`**
+
+- Behavior: The element is positioned according to the normal document flow, but it can be offset relative to its normal position using the top, right, bottom, and left properties.
+- Use case: Adjusting the position of an element without affecting the layout of other elements.
+
+```js
+div {
+  position: relative;
+  top: 10px; /* Moves the element 10px down from its normal position */
+  left: 20px; /* Moves the element 20px to the right from its normal position */
+}
+
+```
+
+**`position: absolute`**
+
+- Behavior: The element is positioned relative to its nearest positioned ancestor (an ancestor with position: relative, position: absolute, position: fixed, or position: sticky). If no such ancestor exists, it is positioned relative to the initial containing block (usually the viewport).
+- Use case: Removing an element from the document flow and positioning it exactly where needed.
+
+```js
+div {
+  position: absolute;
+  top: 50px; /* Positions the element 50px from the top of the nearest positioned ancestor */
+  left: 100px; /* Positions the element 100px from the left of the nearest positioned ancestor */
+}
+
+```
+
+**`position: fixed`**
+
+- Behavior: The element is positioned relative to the viewport and does not move when the page is scrolled.
+- Use case: Creating fixed headers, footers, or other elements that stay in place during scrolling.
+
+```js
+div {
+  position: fixed;
+  top: 0; /* Positions the element at the top of the viewport */
+  left: 0; /* Positions the element at the left of the viewport */
+  width: 100%; /* Makes the element full width */
+}
+
+```
+
+**`position`: `sticky`**
+
+- Behavior: The element is treated as relative until it crosses a specified point (defined by top, right, bottom, or left), after which it is treated as fixed within its containing block.
+- Use case: Creating elements that stick to the viewport edge when scrolling past them.
+
+```js
+div {
+  position: sticky;
+  top: 0; /* Sticks the element to the top of its containing block when scrolling past it */
+}
+
+```
+
+**Example to Demonstrate All Positions**
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Position Property Example</title>
+<style>
+  .static {
+    position: static;
+    background-color: lightgray;
+  }
+  .relative {
+    position: relative;
+    top: 10px;
+    left: 20px;
+    background-color: lightblue;
+  }
+  .absolute-container {
+    position: relative;
+    height: 200px;
+    background-color: lightcoral;
+  }
+  .absolute {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    background-color: lightgreen;
+  }
+  .fixed {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: lightpink;
+  }
+  .sticky {
+    position: sticky;
+    top: 0;
+    background-color: lightyellow;
+  }
+</style>
+</head>
+<body>
+
+<div class="static">Static Position</div>
+<div class="relative">Relative Position</div>
+<div class="absolute-container">
+  Absolute Container
+  <div class="absolute">Absolute Position</div>
+</div>
+<div class="fixed">Fixed Position</div>
+<div class="sticky">Sticky Position</div>
+<div style="height: 2000px;">Scroll down to see sticky and fixed elements in action.</div>
+
+</body>
+</html>
+
+```
+
+**Summary**
+
+- `static`: Default positioning, follows normal document flow.
+- `relative`: Offsets element relative to its normal position.
+- `absolute`: Positions element relative to the nearest positioned ancestor.
+- `fixed`: Positions element relative to the viewport, remains fixed during scrolling.
+- `sticky`: Behaves like `relative` until a specified point, then acts like `fixed`.
+
+Understanding the `position` property is crucial for creating complex layouts and controlling the positioning of elements on a web page.
+
+</details>
+</details>
+<details>
+<summary>
+<h3></h3>
+</summary>
+</details>
 </details>
 <details>
 <summary>
