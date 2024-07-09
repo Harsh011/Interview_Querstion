@@ -246,12 +246,15 @@ outer();
     - Output: undefined
 
 1.  Calling inner():
-    ```js
+
+    ````js
     inner();
 
         ```
 
     **Inside the inner Function**
+
+    ````
 
 1.  console.log(x) in inner:
 
@@ -282,6 +285,86 @@ undefined;
 This output demonstrates JavaScript's hoisting and scoping mechanisms, where variable declarations are hoisted to the top of their scope but initializations are not, and functions have access to variables in their lexical scope.
 
 </details>
+
+<details>
+<summary>
+<h3>4. Async function</h3>
+</summary>
+
+```js
+async function foo() {
+  return "Hello world";
+}
+
+const result = foo();
+console.log(result);
+```
+
+**Explanation**:
+
+1. async Function:
+
+   - The async keyword before a function declaration (async function foo() { ... }) ensures that the function always returns a promise. In this case, foo() returns a promise that resolves with the value "Hello world".
+
+1. Calling foo():
+
+   - When foo() is called, it starts executing synchronously. However, because it's an async function, it immediately returns a promise.
+
+1. Promise Returned by foo():
+
+   - The expression const result = foo(); assigns the promise returned by foo() to the variable result.
+
+1. Logging result:
+
+   - console.log(result); logs the promise object itself, not the resolved value "Hello world".
+
+**Output**:
+
+When you run this code, the output logged to the console will be:
+
+```js
+Promise {<resolved>: "Hello world"}
+
+```
+
+**Understanding the Output:**
+
+- `foo()` returns a promise immediately with the resolved value `"Hello world".`
+- c`onsole.log(result)`; logs the promise object itself, which includes information about its state (`resolved`) and the resolved value `("Hello world").`
+  **Accessing the Resolved Value:**
+
+To access the resolved value `"Hello world"` from the promise returned by foo(), you need to use `.then()` or `async/await:`
+
+- Using `.then()`:
+
+```js
+foo().then((result) => {
+  console.log(result); // Output: Hello world
+});
+```
+
+Using `async/await` (within an `async` function):
+
+```js
+async function example() {
+  const result = await foo();
+  console.log(result); // Output: Hello world
+}
+
+example();
+```
+
+**Summary**:
+
+- `async` functions always return a promise.
+- Calling an `async` function returns a promise immediately, even before the function completes execution.
+- To get the resolved value from an `async` function, you typically use .`then()` or await within an async function.
+
+</details>
+<details>
+<summary>
+<h3></h3>
+</summary>
 </details>
 <details>
 <summary>
