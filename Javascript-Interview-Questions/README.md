@@ -1907,8 +1907,410 @@ Understanding event bubbling and event capturing is essential for managing compl
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>20. What is Closure</h3>
 </summary>
+
+In JavaScript, a closure is a feature that allows a function to retain access to its lexical scope, even when that function is executed outside of its original scope. This means that a function defined inside another function (an inner function) retains access to the variables and parameters of its outer function, even after the outer function has finished executing.
+
+**How Closures Work**
+
+Closures are created whenever a function is defined inside another function, allowing the inner function to access variables from the outer function's scope. This captured environment is referred to as the closure.
+
+**Example of a Closure**
+
+Here’s a simple example to illustrate closures:
+
+```js
+function outerFunction() {
+  let outerVariable = "I am an outer variable";
+
+  function innerFunction() {
+    console.log(outerVariable); // Can access outerVariable
+  }
+
+  return innerFunction;
+}
+
+const closure = outerFunction();
+closure(); // Output: 'I am an outer variable'
+```
+
+In this example:
+
+- `outerFunction` defines a variable `outerVariable` and an inner function `innerFunction`.
+- `innerFunction` has access to `outerVariable` because it is defined within the same `lexical scope`.
+- `outerFunction` returns `innerFunction`, which is then assigned to the variable `closure`.
+- Even though `outerFunction` has finished executing, `innerFunction` retains access to `outerVariable` when it is called.
+
+**Practical Use Cases of Closures**
+
+1.  `Data Privacy:` Closures can create private variables that cannot be accessed directly from outside the function.
+
+    ```js
+    function createCounter() {
+      let count = 0;
+
+      return {
+        increment: function () {
+          count++;
+          return count;
+        },
+        decrement: function () {
+          count--;
+          return count;
+        },
+      };
+    }
+
+    const counter = createCounter();
+    console.log(counter.increment()); // Output: 1
+    console.log(counter.increment()); // Output: 2
+    console.log(counter.decrement()); // Output: 1
+    ```
+
+1.  `Function Factories`: Closures can generate specific functions based on given parameters.
+
+    ```js
+    function createMultiplier(multiplier) {
+      return function (number) {
+        return number * multiplier;
+      };
+    }
+
+    const double = createMultiplier(2);
+    const triple = createMultiplier(3);
+
+    console.log(double(5)); // Output: 10
+    console.log(triple(5)); // Output: 15
+    ```
+
+1.  `Maintaining State`: Closures can maintain the state across multiple function calls.
+    ```js
+    function makeAdder(x) {
+    return function(y) {
+    return x + y;
+    };
+    }
+
+        const add5 = makeAdder(5);
+        const add10 = makeAdder(10);
+
+        console.log(add5(2)); // Output: 7
+        console.log(add10(2)); // Output: 12
+
+        ```
+
+    **Advantages of Closures**
+
+- `Encapsulation`: Closures provide a way to encapsulate and protect variables from being accessed or modified directly.
+- `State Preservation`: Closures allow functions to retain and manage state over multiple invocations.
+- `Modular Code:` Closures help in creating modular and maintainable code by promoting function factories and private variables.
+
+**Common Pitfalls and Considerations**
+
+- **Memory Leaks:** Closures can inadvertently cause memory leaks if they retain references to large objects or DOM elements.
+- **Performanc**: Excessive use of closures can lead to performance issues due to the increased memory consumption for maintaining the outer scope.
+- **Debuggin**: Debugging closures can be challenging, especially when dealing with asynchronous code or complex nesting.
+
+**Conclusion**
+
+Closures are a fundamental and powerful feature of JavaScript, enabling sophisticated patterns for encapsulating and managing state, creating private variables, and generating functions dynamically. Understanding and mastering closures is essential for writing effective and maintainable JavaScript code.
+
+</details>
+</details>
+<details>
+<summary>
+<h3>21. What is use-strict</h3>
+</summary>
+
+In JavaScript, "use strict" is a directive that enables strict mode, a way to opt into a restricted variant of JavaScript. Strict mode helps catch common coding errors, prevents the use of certain potentially problematic language features, and generally improves the robustness of your code.
+
+**Enabling Strict Mode**
+
+Strict mode can be enabled in two ways:
+
+1.  **Globally in a Script**: To enable strict mode for an entire script, place "use strict"; at the beginning of the file.
+
+    ```js
+    "use strict";
+
+    // Entire script is in strict mode
+    var x = 3.14;
+    ```
+
+1.  **Locally in a Function**: To enable strict mode only within a specific function, place "use strict"; at the beginning of the function body.
+    ```js
+    function myFunction() {
+    "use strict";
+
+          // Function body is in strict mode
+          var y = 3.14;
+        }
+
+        ```
+
+    **Benefits of Using Strict Mode**
+
+1.  **Eliminates Silent Errors**: Strict mode converts silent errors into explicit errors. This helps catch bugs early in the development process.
+
+    ```js
+    "use strict";
+    x = 3.14; // ReferenceError: x is not defined
+    ```
+
+1.  **Prevents Accidental Globals**: Variables must be declared with var, let, or const. Assigning to an undeclared variable will throw an error.
+
+    ```js
+    "use strict";
+    y = 3.14; // ReferenceError: y is not defined
+    ```
+
+1.  **Disallows Duplicates**: Duplicate parameter names in functions are not allowed.
+
+    ```js
+    "use strict";
+    function sum(a, a, c) {
+      // SyntaxError: Duplicate parameter name not allowed in this context
+      return a + a + c;
+    }
+    ```
+
+1.  **Secures this Context:** In strict mode, the value of this is undefined in functions that are not called as methods.
+
+    ```js
+    "use strict";
+    function showThis() {
+      console.log(this); // undefined
+    }
+    showThis();
+    ```
+
+1.  **Disallows Octal Syntax**: Octal literals (numbers prefixed with 0) are not allowed.
+
+    ```js
+    "use strict";
+    var num = 010; // SyntaxError: Octal literals are not allowed in strict mode
+    ```
+
+1.  **Restricts eval and arguments**: The use of eval and arguments are more restricted, preventing certain modifications that could lead to difficult-to-debug issues.
+    ```js
+    "use strict";
+    eval("var z = 2");
+    console.log(z); // ReferenceError: z is not defined
+
+        arguments.callee; // TypeError: 'arguments.callee' is not allowed in strict mode
+
+        ```
+
+    **Potential Issues and Considerations**
+
+- `Legacy Code`: Adding strict mode to legacy code may cause it to break if the code contains patterns that are disallowed in strict mode.
+- `Third-Party Libraries`: Ensure that third-party libraries you use are compatible with strict mode.
+- `Global Scope`: Enabling strict mode globally in a script affects all code within the script, including third-party libraries that may not expect strict mode.
+
+**Example**
+
+```js
+"use strict";
+
+function strictFunction() {
+  var x = 3.14;
+  console.log(x); // 3.14
+
+  // The following line will throw an error because y is not declared
+  // y = 2.72; // ReferenceError: y is not defined
+}
+
+strictFunction();
+```
+
+In this example, strict mode is enabled globally for the script. The `strictFunction` works correctly when `x` is declared, but would throw an error if `y` is assigned without declaration.
+
+**Conclusion**
+
+Strict mode is a valuable feature in JavaScript that helps developers write cleaner, more robust code by catching common errors and preventing certain problematic language features. It is highly recommended to use strict mode in modern JavaScript development to improve code quality and maintainability.
+
+</details>
+</details>
+<details>
+<summary>
+<h3>22. What is Destructuring </h3>
+</summary>
+
+Destructuring in JavaScript is a convenient way of extracting values from arrays or properties from objects and assigning them to variables. It allows for more concise and readable code by directly unpacking values from data structures.
+
+**Array Destructuring**
+
+Array destructuring allows you to unpack values from arrays into distinct variables.
+
+**Basic Example**
+
+```js
+const fruits = ["Apple", "Banana", "Cherry"];
+
+const [first, second, third] = fruits;
+
+console.log(first); // Output: Apple
+console.log(second); // Output: Banana
+console.log(third); // Output: Cherry
+```
+
+**Skipping Elements**
+
+You can skip elements in the array by leaving gaps in the destructuring pattern.
+
+```js
+const colors = ["Red", "Green", "Blue"];
+
+const [, , third] = colors;
+
+console.log(third); // Output: Blue
+```
+
+**Default Values**
+
+You can provide default values in case the array doesn't have enough elements.
+
+```js
+const numbers = [1, 2];
+
+const [a, b, c = 3] = numbers;
+
+console.log(c); // Output: 3
+```
+
+**Swapping Variables**
+
+Destructuring can be used to swap variables without using a temporary variable.
+
+```js
+let x = 1;
+let y = 2;
+
+[x, y] = [y, x];
+
+console.log(x); // Output: 2
+console.log(y); // Output: 1
+```
+
+**Object Destructuring**
+
+Object destructuring allows you to unpack properties from objects into distinct variables.
+
+Basic Example
+
+```js
+const person = {
+  name: "John Doe",
+  age: 30,
+  profession: "Developer",
+};
+
+const { name, age, profession } = person;
+
+console.log(name); // Output: John Doe
+console.log(age); // Output: 30
+console.log(profession); // Output: Developer
+```
+
+**Renaming Variables**
+
+You can rename the variables while destructuring.
+
+```js
+const person = {
+  name: "Jane Doe",
+  age: 25,
+};
+
+const { name: fullName, age: years } = person;
+
+console.log(fullName); // Output: Jane Doe
+console.log(years); // Output: 25
+```
+
+**Default Values**
+
+You can provide default values for variables if the property doesn't exist in the object.
+
+```js
+const person = {
+  name: "Alice",
+};
+
+const { name, age = 20 } = person;
+
+console.log(age); // Output: 20
+```
+
+**Nested Object Destructuring**
+
+You can destructure nested objects by specifying the structure.
+
+```js
+const user = {
+  id: 1,
+  profile: {
+    firstName: "Bob",
+    lastName: "Smith",
+  },
+};
+
+const {
+  profile: { firstName, lastName },
+} = user;
+
+console.log(firstName); // Output: Bob
+console.log(lastName); // Output: Smith
+```
+
+**Mixed Destructuring**
+
+You can combine array and object destructuring.
+
+```js
+const user = {
+  id: 1,
+  info: ["Alice", "Developer", 30],
+};
+
+const {
+  info: [name, profession, age],
+} = user;
+
+console.log(name); // Output: Alice
+console.log(profession); // Output: Developer
+console.log(age); // Output: 30
+```
+
+**Function Parameters**
+
+Destructuring can be used directly in function parameters to unpack values from arguments.
+
+**Array Parameters**
+
+```js
+function greet([firstName, lastName]) {
+  console.log(`Hello, ${firstName} ${lastName}`);
+}
+
+greet(["John", "Doe"]); // Output: Hello, John Doe
+```
+
+**Object Parameters**
+
+```js
+function display({ name, age }) {
+  console.log(`Name: ${name}, Age: ${age}`);
+}
+
+display({ name: "Jane Doe", age: 28 }); // Output: Name: Jane Doe, Age: 28
+```
+
+**Conclusion**
+
+Destructuring in JavaScript is a powerful feature that makes it easier to work with arrays and objects by allowing you to extract values and assign them to variables in a concise and readable manner. It simplifies code and reduces the need for multiple lines of assignments, making your code more maintainable and expressive.
+
 </details>
 </details>
 <details>
