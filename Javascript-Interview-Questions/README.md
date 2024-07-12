@@ -1985,7 +1985,8 @@ In this example:
     ```
 
 1.  `Maintaining State`: Closures can maintain the state across multiple function calls.
-    ```js
+
+    ````js
     function makeAdder(x) {
     return function(y) {
     return x + y;
@@ -2001,6 +2002,7 @@ In this example:
         ```
 
     **Advantages of Closures**
+    ````
 
 - `Encapsulation`: Closures provide a way to encapsulate and protect variables from being accessed or modified directly.
 - `State Preservation`: Closures allow functions to retain and manage state over multiple invocations.
@@ -2039,7 +2041,8 @@ Strict mode can be enabled in two ways:
     ```
 
 1.  **Locally in a Function**: To enable strict mode only within a specific function, place "use strict"; at the beginning of the function body.
-    ```js
+
+    ````js
     function myFunction() {
     "use strict";
 
@@ -2050,6 +2053,8 @@ Strict mode can be enabled in two ways:
         ```
 
     **Benefits of Using Strict Mode**
+
+    ````
 
 1.  **Eliminates Silent Errors**: Strict mode converts silent errors into explicit errors. This helps catch bugs early in the development process.
 
@@ -2093,7 +2098,8 @@ Strict mode can be enabled in two ways:
     ```
 
 1.  **Restricts eval and arguments**: The use of eval and arguments are more restricted, preventing certain modifications that could lead to difficult-to-debug issues.
-    ```js
+
+    ````js
     "use strict";
     eval("var z = 2");
     console.log(z); // ReferenceError: z is not defined
@@ -2103,6 +2109,7 @@ Strict mode can be enabled in two ways:
         ```
 
     **Potential Issues and Considerations**
+    ````
 
 - `Legacy Code`: Adding strict mode to legacy code may cause it to break if the code contains patterns that are disallowed in strict mode.
 - `Third-Party Libraries`: Ensure that third-party libraries you use are compatible with strict mode.
@@ -2312,6 +2319,468 @@ display({ name: "Jane Doe", age: 28 }); // Output: Name: Jane Doe, Age: 28
 Destructuring in JavaScript is a powerful feature that makes it easier to work with arrays and objects by allowing you to extract values and assign them to variables in a concise and readable manner. It simplifies code and reduces the need for multiple lines of assignments, making your code more maintainable and expressive.
 
 </details>
+
+<details>
+<summary>
+<h3>23. What is Currying</h3>
+</summary>
+
+Currying is a functional programming technique where a function with multiple arguments is transformed into a sequence of functions, each taking a single argument. In JavaScript, currying allows functions to be more flexible and reusable.
+
+**Example of Currying in JavaScript**
+
+Let's start with a simple example of a function that adds three numbers:
+
+```js
+function add(a, b, c) {
+  return a + b + c;
+}
+
+console.log(add(1, 2, 3)); // Output: 6
+```
+
+To convert this add function to a curried version, we transform it so that it takes one argument at a time:
+
+```js
+function curryAdd(a) {
+  return function (b) {
+    return function (c) {
+      return a + b + c;
+    };
+  };
+}
+
+console.log(curryAdd(1)(2)(3)); // Output: 6
+```
+
+**Practical Example: Currying for Configuration**
+
+Currying can be particularly useful for creating functions that require configuration or for handling partial application of functions.
+
+**Scenario: Creating a Curried Logging Function**
+
+Consider a logging function that logs messages with different levels (info, warn, error). Using currying, we can create a configurable logger:
+
+```js
+function createLogger(level) {
+  return function (message) {
+    console.log(`[${level}] ${message}`);
+  };
+}
+
+const infoLogger = createLogger("INFO");
+const warnLogger = createLogger("WARN");
+const errorLogger = createLogger("ERROR");
+
+infoLogger("This is an informational message.");
+warnLogger("This is a warning message.");
+errorLogger("This is an error message.");
+```
+
+**Explanation:**
+
+1. Curried Function: createLogger is a curried function that takes a level argument and returns another function that takes a message argument.
+1. Creating Loggers: By calling createLogger with different levels, we create specific logging functions (infoLogger, warnLogger, errorLogger).
+1. Logging Messages: These specific logging functions can be used to log messages with their respective levels.
+
+**More Advanced Currying: General Utility Function**
+
+We can create a general-purpose currying function that can transform any function into its curried form:
+
+```js
+function curry(fn) {
+  return function curried(...args) {
+    if (args.length >= fn.length) {
+      return fn.apply(this, args);
+    } else {
+      return function (...nextArgs) {
+        return curried.apply(this, args.concat(nextArgs));
+      };
+    }
+  };
+}
+
+// Example function to curry
+function multiply(a, b, c) {
+  return a * b * c;
+}
+
+const curriedMultiply = curry(multiply);
+
+console.log(curriedMultiply(2)(3)(4)); // Output: 24
+console.log(curriedMultiply(2, 3)(4)); // Output: 24
+console.log(curriedMultiply(2)(3, 4)); // Output: 24
+```
+
+**Explanation:**
+
+1. **General `curry` Function:** The `curry` function takes any function `fn` and returns its curried version.
+1. **Curried Function:** The `curried` function checks if the number of provided arguments is sufficient to call the original function `fn`. If so, it calls `fn` with all arguments. Otherwise, it returns a new function that continues to collect arguments.
+1. **Example Usage:** We use `curry` to transform the `multiply` function into a curried version, allowing us to call it with arguments one at a time or in groups.
+
+Currying can significantly enhance the flexibility and reusability of functions in JavaScript, making it a powerful tool in functional programming.
+
+</details>
+<details>
+<summary>
+<h3>24. What is difference between Arrow and Normal Function</h3>
+</summary>
+Arrow functions and normal (traditional) functions in JavaScript have several differences in syntax and behavior. Here are the key differences:
+
+Syntax
+Arrow Function Syntax:
+
+```js
+const add = (a, b) => a + b;
+```
+
+Normal Function Syntax:
+
+```js
+function add(a, b) {
+  return a + b;
+}
+```
+
+`this` Binding
+
+**Arrow Functions:**
+
+- Do not have their own `this` context. They inherit `this` from the parent scope (lexical scoping).
+- Cannot be used as constructors (i.e., they can't be used with the `new` keyword).
+
+```js
+const obj = {
+  value: 42,
+  arrowFunc: () => console.log(this.value), // 'this' is inherited from the surrounding scope
+  normalFunc() {
+    console.log(this.value); // 'this' refers to the obj context
+  },
+};
+
+obj.arrowFunc(); // undefined (or global object's `value` in non-strict mode)
+obj.normalFunc(); // 42
+```
+
+**Normal Functions:**
+
+- Have their own `this` context, which is determined by how the function is called.
+- Can be used as constructors.
+
+```js
+function NormalFunction() {
+  this.value = 42;
+}
+
+const instance = new NormalFunction();
+console.log(instance.value); // 42
+```
+
+**Arguments Object**
+
+Arrow Functions:
+
+- Do not have their own `arguments` object. They inherit `arguments` from the parent scope.
+
+```js
+const arrowFunc = () => {
+  console.log(arguments); // References arguments of the enclosing scope, not the arrow function itself
+};
+arrowFunc(1, 2, 3); // Throws a ReferenceError if no arguments object exists in the parent scope
+```
+
+**Normal Functions:**
+
+- Have their own `arguments` object, which contains all the arguments passed to the function.
+
+```js
+function normalFunc() {
+  console.log(arguments); // [1, 2, 3]
+}
+normalFunc(1, 2, 3);
+```
+
+**Constructor Usage**
+
+Arrow Functions:
+
+- Cannot be used as constructors and will throw an error if used with the `new` keyword.
+
+```js
+const ArrowFunc = () => {};
+const instance = new ArrowFunc(); // TypeError: ArrowFunc is not a constructor
+```
+
+**Normal Functions:**
+
+- Can be used as constructors with the `new` keyword.
+
+```js
+function NormalFunc() {}
+const instance = new NormalFunc(); // Works fine
+```
+
+**Implicit Return**
+
+Arrow Functions:
+
+- Can have an implicit return, meaning if the function body is a single expression, it can be returned without the `return` keyword.
+
+```js
+const add = (a, b) => a + b;
+```
+
+**Normal Functions:**
+
+Require the `return` keyword to return a value.
+
+```js
+function add(a, b) {
+  return a + b;
+}
+```
+
+**Methods**
+
+Arrow Functions:
+
+- Not suitable for defining methods in an object due to their `this` binding behavior.
+
+```js
+const obj = {
+  value: 42,
+  arrowFunc: () => console.log(this.value), // `this` is not obj's context
+};
+obj.arrowFunc(); // undefined
+```
+
+**Normal Functions:**
+
+- Suitable for defining methods in an object since `this` refers to the object itself.
+
+```js
+const obj = {
+  value: 42,
+  normalFunc() {
+    console.log(this.value); // `this` is obj's context
+  },
+};
+obj.normalFunc(); // 42
+```
+
+**Summary**
+
+- **Syntax**: Arrow functions have a more concise syntax.
+- **`this` Binding**: Arrow functions inherit `this` from the parent scope; normal functions have their own `this`.
+- **Arguments Object**: Arrow functions do not have their own `arguments` object.
+- **Constructor**: Arrow functions cannot be used as constructors.
+- **Implicit Return**: Arrow functions can have implicit return for single expressions.
+- **Methods**: Arrow functions are not suitable for object methods due to their `this` behavior.
+
+Choosing between arrow functions and normal functions depends on the specific use case, particularly with regard to how `this` is handled and whether the function needs to be used as a constructor or have its own arguments object.
+
+</details>
+<details>
+<summary>
+<h3>25. `this` keyword</h3>
+</summary>
+
+The `this` keyword in JavaScript is a reference to the current execution context of a function. Its value depends on how the function is called, and it can behave differently in various scenarios. Here are the key points to understand about `this` in JavaScript:
+
+**Global Context**
+
+In the global execution context (outside any function), this refers to the global object.
+
+- In a browser, the global object is window.
+- In Node.js, the global object is global.
+
+```js
+console.log(this); // In a browser: window, in Node.js: global
+```
+
+**Function Context**
+
+In a regular function, the value of this depends on how the function is called.
+
+**Simple Function Call**
+
+When a function is called in the global context, this refers to the global object (in non-strict mode) or is undefined (in strict mode).
+
+```js
+function myFunction() {
+  console.log(this);
+}
+myFunction(); // In non-strict mode: window (or global in Node.js), in strict mode: undefined
+```
+
+**Method Call**
+
+When a function is called as a method of an object, this refers to the object that owns the method.
+
+```js
+const obj = {
+  value: 42,
+  myMethod: function () {
+    console.log(this.value);
+  },
+};
+obj.myMethod(); // 42
+```
+
+**Constructor Call**
+
+When a function is used as a constructor (called with the new keyword), this refers to the newly created instance.
+
+```js
+function MyConstructor() {
+  this.value = 42;
+}
+
+const instance = new MyConstructor();
+console.log(instance.value); // 42
+```
+
+`call`, `apply`, and `bind` Methods
+The `call` and `apply` methods can explicitly set the value of this.
+
+```js
+function myFunction() {
+  console.log(this.value);
+}
+
+const obj = { value: 42 };
+myFunction.call(obj); // 42
+myFunction.apply(obj); // 42
+```
+
+The bind method creates a new function with a bound this value.
+
+```js
+const boundFunction = myFunction.bind(obj);
+boundFunction(); // 42
+```
+
+**Arrow Functions**
+
+Arrow functions do not have their own this context. Instead, this is lexically inherited from the enclosing execution context.
+
+```js
+const obj = {
+  value: 42,
+  arrowFunc: () => {
+    console.log(this.value); // 'this' refers to the enclosing context, not the obj
+  },
+};
+
+obj.arrowFunc(); // undefined (or window/global in non-strict mode)
+```
+
+**Event Handlers**
+
+In event handlers, this refers to the element that received the event.
+
+```js
+const button = document.querySelector("button");
+button.addEventListener("click", function () {
+  console.log(this); // 'this' refers to the button element
+});
+```
+
+**Summary of `this` Behavior**
+
+- **Global Context:** `this` refers to the global object (`window` in browsers, `global` in Node.js).
+- **Simple Function Call:** `this` refers to the global object (non-strict mode) or undefined (strict mode).
+- **Method Call:** `this` refers to the object that owns the method.
+- **Constructor Call:** `this` refers to the newly created instance.
+- **call, apply, bind:** These methods explicitly set the value of this.
+- **Arrow Functions:** `this` is lexically inherited from the enclosing scope.
+- **Event Handlers:** `this` refers to the element that received the event.
+
+Understanding how `this` works in different contexts is crucial for writing correct and efficient JavaScript code.
+
+</details>
+<details>
+<summary>
+<h3>26. What is Debouncing</h3>
+</summary>
+
+Debouncing in JavaScript is a technique used to limit the rate at which a function gets executed. It ensures that a function is only called after a certain period of inactivity. This is particularly useful for optimizing performance in scenarios where a function might be triggered multiple times in rapid succession, such as during user input events, resizing, or scrolling.
+
+**How Debouncing Works**
+
+When you debounce a function, you delay its execution until a specified amount of time has passed since the last time it was invoked. If the debounced function is called again before the delay period ends, the previous timer is canceled and a new timer is set. This ensures that the function is only executed once after the user has stopped triggering the event for the specified delay period.
+
+**Example Implementation of Debouncing**
+
+Here's how you can implement a debounce function in JavaScript:
+
+```js
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+```
+
+**Usage Example**
+
+Suppose you have an input field where you want to perform a search operation only after the user has stopped typing for 300 milliseconds. You can use the debounce function to achieve this:
+
+```js
+<input type="text" id="searchInput" placeholder="Type to search...">
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+
+  function performSearch(query) {
+    console.log('Searching for:', query);
+    // Perform search operation
+  }
+
+  const debouncedSearch = debounce(function(event) {
+    performSearch(event.target.value);
+  }, 300);
+
+  searchInput.addEventListener('input', debouncedSearch);
+</script>
+
+```
+
+**Explanation**
+
+1. **Debounce Function:** The debounce function takes two arguments: the function to debounce (func) and the delay in milliseconds (delay). It returns a new debounced function.
+
+1. **Timeout Variable:** A timeoutId variable is used to keep track of the timer. This ensures that the timer is cleared and reset whenever the debounced function is called again before the delay period has elapsed.
+
+1. **Clear Timeout:** The clearTimeout function is called to reset the timer whenever the debounced function is invoked again before the delay period has elapsed.
+
+1. **Set Timeout:** The setTimeout function is used to set a new timer. If the debounced function is not called again within the delay period, the original function (func) is executed.
+
+1. **Event Listener:** An event listener is added to the input field to listen for the input event. The debounced function is called whenever the input event is triggered, ensuring that the performSearch function is only executed once the user has stopped typing for 300 milliseconds.
+
+**Benefits of Debouncing**
+
+- \***\*Performance\*\***: Reduces the number of times a function is called, improving the performance of your application.
+- \***\*Efficiency\*\***: Ensures that the function is only executed when necessary, after user input has settled.
+- \***\*Better User Experience:\*\*** Prevents unnecessary function calls and potential lag, leading to a smoother user experience.
+
+**Common Use Cases**
+
+1. **Search Boxes:** Delaying search queries until the user has finished typing.
+1. **Resize Events:** Handling window resize events without triggering multiple times per second.
+1. **Scrolling:** Managing scroll events efficiently to improve performance.
+
+Debouncing is a powerful technique for optimizing event handling in JavaScript and is especially useful in scenarios where events are triggered frequently in a short period.
+
+</details>
+<details>
+<summary>
+<h3></h3>
+</summary>
 </details>
 <details>
 <summary>
