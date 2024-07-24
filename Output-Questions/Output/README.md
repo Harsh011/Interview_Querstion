@@ -186,3 +186,37 @@ output
 hii;
 undefined;
 ```
+
+---
+
+<h2>11.</h2>
+
+```js
+console.log(a);
+console.log(b);
+var a = (b = 5);
+```
+
+---
+
+<h2>12.</h2>
+
+```js
+console.log("4" + 6 * 5); // 430
+```
+
+---
+
+<h2>13.</h2>
+
+```js
+console.log(typeof NaN); // number
+```
+
+<h2>14.</h2>
+
+```js
+console.log("5" - "3" + 4); // (2 + 4) => 6
+```
+
+---

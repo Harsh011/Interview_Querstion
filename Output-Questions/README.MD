@@ -363,8 +363,56 @@ example();
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>5. Without flat method solve</h3>
 </summary>
+
+To convert a nested array, such as `[[1, 2], [3, 4], [5]]`, into a single flat array without using the `Array.prototype.flat()` method, you can use various techniques. One common approach is to use the `Array.prototype.concat()` method along with the `spread` operator, `Array.prototype.reduce()`, or a simple loop.
+
+**Using `concat()` with Spread Operator**
+
+The spread operator `...` can be used to unpack elements from an array. By spreading the nested arrays into `concat()`, you can concatenate them into a single array.
+
+```js
+const arr = [[1, 2], [3, 4], [5]];
+const flattenedArr = [].concat(...arr);
+
+console.log(flattenedArr); // Output: [1, 2, 3, 4, 5]
+```
+
+**Using reduce()**
+
+The `reduce()` method can also be used to accumulate the elements of the nested arrays into a single array.
+
+```js
+const arr = [[1, 2], [3, 4], [5]];
+const flattenedArr = arr.reduce((acc, curr) => acc.concat(curr), []);
+
+console.log(flattenedArr); // Output: [1, 2, 3, 4, 5]
+```
+
+Here, `acc` is the accumulator that starts as an empty array `[],` and curr represents the current sub-array being iterated over. The `concat()` method combines each sub-array (`curr`) into the accumulator (`acc`).
+
+**Using a For Loop**
+
+You can also flatten the array using a traditional `for` loop.
+
+```js
+const arr = [[1, 2], [3, 4], [5]];
+const flattenedArr = [];
+
+for (let i = 0; i < arr.length; i++) {
+  for (let j = 0; j < arr[i].length; j++) {
+    flattenedArr.push(arr[i][j]);
+  }
+}
+
+console.log(flattenedArr); // Output: [1, 2, 3, 4, 5]
+```
+
+In this example, two nested loops iterate over the sub-arrays and push each element into the `flattenedArr` array.
+
+Each of these methods effectively flattens the nested array `[[1, 2], [3, 4], [5]] `into `[1, 2, 3, 4, 5] `without using the `flat()` method. The choice of method can depend on personal preference or specific requirements related to performance or readability.
+
 </details>
 <details>
 <summary>
