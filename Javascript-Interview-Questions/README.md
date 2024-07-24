@@ -2832,6 +2832,79 @@ By understanding and optimizing the Critical Rendering Path, developers can sign
 </details>
 <details>
 <summary>
+<h3>28. What is difference between shallow copy and deep copy</h3>
+</summary>
+
+The main difference between shallow copy and deep copy lies in how they handle the copying of nested objects or references within the original object:
+
+**Shallow Copy**
+
+- Definition: A shallow copy creates a new object but does not create copies of the nested objects or elements. Instead, it only copies the references to those nested objects.
+- Effect: Changes made to the nested objects in the original or the copied object will reflect in both, as they share the same references to these objects.
+- Use Case: Shallow copy is typically faster and is useful when the nested objects are meant to be shared or when the object is not deeply nested.
+
+```js
+const original = {
+  name: "John",
+  age: 30,
+  address: {
+    city: "New York",
+    zip: "10001",
+  },
+};
+
+// Shallow copy using Object.assign()
+const shallowCopy1 = Object.assign({}, original);
+
+// Shallow copy using spread syntax
+const shallowCopy2 = { ...original };
+
+// Modify the nested object
+shallowCopy1.address.city = "Los Angeles";
+
+console.log(original.address.city); // Output: "Los Angeles"
+console.log(shallowCopy2.address.city); // Output: "Los Angeles"
+```
+
+**Deep Copy**
+
+- Definition: A deep copy creates a new object and also recursively copies all objects nested within the original, creating a fully independent clone.
+- Effect: Changes made to the nested objects in the original or the deep-copied object do not affect each other, as they do not share references to these objects.
+- Use Case: Deep copy is useful when a complete independent duplicate of an object is needed, especially when the object contains nested structures.
+
+```js
+const original = {
+  name: "John",
+  age: 30,
+  address: {
+    city: "New York",
+    zip: "10001",
+  },
+};
+
+// Deep copy using JSON.parse and JSON.stringify
+const deepCopy = JSON.parse(JSON.stringify(original));
+
+// Modify the nested object
+deepCopy.address.city = "Los Angeles";
+
+console.log(original.address.city); // Output: "New York"
+console.log(deepCopy.address.city); // Output: "Los Angeles"
+```
+
+**Key Differences**
+
+- **References**: Shallow copy copies references to objects, not the objects themselves, while deep copy creates new instances of the objects.
+- **Independence**: In shallow copies, changes to mutable nested objects affect both the original and the copied object. In deep copies, changes to any part of the copied object do not affect the original.
+- **Performance**: Shallow copying is usually faster and requires less memory than deep copying, especially for large and complex objects.
+</details>
+<details>
+<summary>
+<h3></h3>
+</summary>
+</details>
+<details>
+<summary>
 <h3></h3>
 </summary>
 </details>

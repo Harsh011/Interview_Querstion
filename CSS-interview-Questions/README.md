@@ -532,12 +532,146 @@ Understanding the `position` property is crucial for creating complex layouts an
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>7. How css file connect</h3>
 </summary>
+
+In an HTML document, there is no strict limit on the number of CSS files you can link or include. You can connect multiple CSS files to a single HTML page using the `<link>` element in the `<head>` section. Each `<link>` element specifies a different CSS file, allowing you to modularize and organize your stylesheets effectively.
+
 </details>
+
+<details>
+<summary>
+<h3>8. Which position property default</h3>
+</summary>
+
+In CSS, the `position` property determines how an element is positioned in a document. The default value of the `position` property is `static`.
+
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>9. What is diff bet absolute and relative position</h3>
 </summary>
-</details>
+
+The absolute and relative values of the CSS position property define different positioning behaviors for elements within the document flow. Understanding the differences between these two values is key to mastering layout control in CSS.
+
+**`position: relative`**
+
+1. Positioning Context:
+
+   - An element with `position: relative` is positioned relative to its normal position in the document flow. It retains its place in the normal document flow, so space is still allocated for the element in its original position.
+
+1. Offset Properties:
+
+   - The `top`, `right`, `bottom`, and `left` properties can be used to move the element away from its normal position. The movement is relative to where the element would have been positioned in the normal flow.
+   - The offsets don't affect the positioning of other elements around it; they do not cause other elements to reposition.
+
+1. Use Cases:
+
+   - Useful for slight adjustments to an element's position without removing it from the flow of the document.
+   - Can serve as a containing block for absolutely positioned child elements.
+
+**Example**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relative Position Example</title>
+    <style>
+      .relative-box {
+        position: relative;
+        top: 20px;
+        left: 30px;
+        background-color: lightgreen;
+        width: 100px;
+        height: 100px;
+        border: 2px solid green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="relative-box">Relative Box</div>
+  </body>
+</html>
+```
+
+In this example, the box is moved 20px down and 30px to the right from its normal position, but the space it originally occupied remains in the document flow.
+
+**`position: absolute`**
+
+1. Positioning Context:
+
+   - An element with position: absolute is removed from the normal document flow, meaning it does not occupy space in the layout. Other elements are positioned as if the absolutely positioned element does not exist.
+   - It is positioned relative to the nearest positioned ancestor (an ancestor with position set to something other than static). If no such ancestor exists, it is positioned relative to the initial containing block, usually the <html> element or the browser window.
+
+1. Offset Properties:
+
+   - The top, right, bottom, and left properties are used to set the position of the element relative to its nearest positioned ancestor or the initial containing block.
+
+1. Use Cases:
+
+   - Ideal for creating components that need to be precisely placed or layered on top of other content, such as tooltips, modals, or overlays.
+   - Useful in designing complex layouts where elements need to be positioned independently of the surrounding content.
+
+**Example**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Absolute Position Example</title>
+    <style>
+      .container {
+        position: relative;
+        width: 300px;
+        height: 200px;
+        border: 1px solid black;
+      }
+      .absolute-box {
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        background-color: lightcoral;
+        width: 100px;
+        height: 100px;
+        border: 2px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="absolute-box">Absolute Box</div>
+    </div>
+  </body>
+</html>
+```
+
+In this example, the `.absolute-box` is positioned 50px from the top and 50px from the left of its nearest positioned ancestor, .`container`. The `.absolute-box` is removed from the normal document flow, meaning it doesn't affect the layout of other elements.
+
+**Key Differences**
+
+- Flow Impact:
+
+  - `relative`: The element remains in the document flow, and space is allocated for it.
+  - `absolute`: The element is removed from the document flow, and no space is allocated for it.
+
+- Positioning Context:
+
+  - `relative`: Positioned relative to its original location in the document flow.
+  - `absolute`: Positioned relative to the nearest positioned ancestor or the initial containing block if no ancestor is positioned.
+
+- Usage:
+
+      - `relative`: Small adjustments or positioning context for absolute children.
+      - `absolute`: Precise, independent positioning, often used for floating elements.
+
+  </details>
+  <details>
+  <summary>
+  <h3></h3>
+  </summary>
+  </details>
