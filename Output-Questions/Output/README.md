@@ -212,11 +212,17 @@ console.log("4" + 6 * 5); // 430
 ```js
 console.log(typeof NaN); // number
 ```
-
+---
 <h2>14.</h2>
 
 ```js
 console.log("5" - "3" + 4); // (2 + 4) => 6
 ```
+---
+<h2>15.</h2>
 
+```js
+console.log(NaN == NaN); //false
+console.log(NaN == NaN); //false
+```
 ---

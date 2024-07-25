@@ -416,6 +416,104 @@ Each of these methods effectively flattens the nested array `[[1, 2], [3, 4], [5
 </details>
 <details>
 <summary>
+<h3>6. Find the longest words in this sentence</h3>
+</summary>
+
+
+To find the longest word within a string in JavaScript, you can follow these steps:
+
+  - Split the string into an array of words.
+  - Iterate through the array to find the longest word.
+  - Keep track of the longest word found.
+
+Here’s an example of how you can implement this:
+```js
+function findLongestWord(str) {
+  // Split the string into an array of words using spaces as the delimiter
+  const words = str.split(' ');
+  
+  // Initialize a variable to keep track of the longest word
+  let longestWord = '';
+
+  // Iterate through the array of words
+  for (const word of words) {
+    // If the current word's length is greater than the longestWord's length, update longestWord
+    if (word.length > longestWord.length) {
+      longestWord = word;
+    }
+  }
+
+  // Return the longest word found
+  return longestWord;
+}
+
+// Example usage
+const sentence = "Find the longest word in this sentence";
+const longestWord = findLongestWord(sentence);
+console.log(`The longest word is: ${longestWord}`);
+
+```
+**Explanation:**
+
+1. **Splitting the String**: str.split(' ') splits the input string into an array of words, using space as the delimiter. If the input contains punctuation or other delimiters, you may want to adjust the split method accordingly (e.g., using a regular expression).
+
+1. **Finding the Longest Word**: The` for...of` loop iterates through each word in the array. If a word's length is greater than the current longest word, `longestWord` is updated.
+
+1. **Returning the Result:** The function returns the longest word found.
+
+**Handling Edge Cases:**
+
+- Empty String: The function will return an empty string if the input is empty.
+- Multiple Words of the Same Longest Length: The function will return the first word encountered with the longest length. If you want to find all longest words, you can modify the logic to store all words of the maximum length found.
+
+</details>
+<details>
+<summary>
+<h3>7. Find the Factorial Number</h3>
+</summary>
+
+Iterative Approach
+
+The iterative approach uses a loop to calculate the factorial:
+
+```js
+function factorialIterative(n) {
+  if (n < 0) {
+    return 'Factorial is not defined for negative numbers';
+  }
+
+  let result = 1;
+  for (let i = 2; i <= n; i++) {
+    result *= i;
+  }
+  return result;
+}
+
+// Example usage
+console.log(factorialIterative(5)); // Output: 120
+
+```
+**Recursive Approach**
+
+The recursive approach involves calling the function itself to calculate the factorial:
+```js
+function factorialRecursive(n) {
+  if (n < 0) {
+    return 'Factorial is not defined for negative numbers';
+  }
+  if (n === 0 || n === 1) {
+    return 1;
+  }
+  return n * factorialRecursive(n - 1);
+}
+
+// Example usage
+console.log(factorialRecursive(5)); // Output: 120
+
+```
+</details>
+<details>
+<summary>
 <h3></h3>
 </summary>
 </details>
