@@ -621,11 +621,7 @@ function sum(x, y) {
 
 ```
 </details>
-<details>
-<summary>
-<h3></h3>
-</summary>
-</details>
+
 <details>
 <summary>
 <h3></h3>
