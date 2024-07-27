@@ -566,6 +566,78 @@ export default ChildComponent;
 </details>
 <details>
 <summary>
+<h3>9. first letter is in available or not in array</h3>
+</summary>
+
+```js
+const a = ["boy", "oy"];
+const b = ["Mary", "Armay"];
+const c = ["Aline", "line"];
+const d = ["voddo", "nc"];
+
+function abc(arr) {
+  let firstItem = arr[0].toLowerCase();
+  let secondItem = arr[1].toLowerCase();
+
+  for (let i = 0; i < secondItem.length; i++) {
+    let letter = secondItem[i];
+    if (firstItem.indexOf(letter) === -1) {
+      return false;
+    }
+
+    return true;
+  }
+}
+
+console.log(abc(a));
+console.log(abc(b));
+console.log(abc(c));
+console.log(abc(d));
+```
+</details>
+<details>
+<summary>
+<h3>10. Output will be same </h3>
+</summary>
+
+Question:- 
+```js
+console.log(sum(5, 6));    
+console.log(sum(5)(6)); 
+```
+Output:-
+```js
+console.log(sum(5, 6));    // Output: 11
+console.log(sum(5)(6));    // Output: 11
+
+function sum(x, y) {
+  if (y === undefined) {
+    return (z) => {
+      return x + z;
+    };
+  }
+  return x + y;
+}
+
+```
+</details>
+<details>
+<summary>
+<h3></h3>
+</summary>
+</details>
+<details>
+<summary>
+<h3></h3>
+</summary>
+</details>
+<details>
+<summary>
+<h3></h3>
+</summary>
+</details>
+<details>
+<summary>
 <h3></h3>
 </summary>
 </details>
