@@ -514,6 +514,63 @@ console.log(factorialRecursive(5)); // Output: 120
 </details>
 <details>
 <summary>
+<h3>8. How to data transfer child to parent components</h3>
+</summary>
+
+Parent.jsx
+```js
+import React, { useState } from 'react';
+import ChildComponent from './ChildComponent';
+
+function ParentComponent() {
+  const [message, setMessage] = useState('');
+
+  const receiveMessage = (newMessage) => {
+    setMessage(newMessage);
+  };
+
+  return (
+    <div>
+      <h1>Parent Component</h1>
+      <p>Message from child: {message}</p>
+      <ChildComponent sendMessage={receiveMessage} />
+    </div>
+  );
+}
+
+export default ParentComponent;
+
+```
+
+child.jsx
+```js
+import React from 'react';
+
+function ChildComponent({ sendMessage }) {
+  const handleClick = () => {
+    const newMessage = "Hello from Child!";
+    sendMessage(newMessage); // Call the function passed from the parent
+  };
+
+  return (
+    <div>
+      <h2>Child Component</h2>
+      <button onClick={handleClick}>Send Message to Parent</button>
+    </div>
+  );
+}
+
+export default ChildComponent;
+
+```
+</details>
+<details>
+<summary>
+<h3></h3>
+</summary>
+</details>
+<details>
+<summary>
 <h3></h3>
 </summary>
 </details>
