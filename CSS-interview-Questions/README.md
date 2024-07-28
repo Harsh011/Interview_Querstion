@@ -672,6 +672,78 @@ In this example, the `.absolute-box` is positioned 50px from the top and 50px fr
   </details>
   <details>
   <summary>
+  <h3>10. what is flexbox model in css</h3>
+  </summary>
+
+The Flexbox model, or Flexible Box Layout, is a CSS layout model that provides a more efficient way to design complex layouts and align content. It simplifies the process of creating flexible, responsive layouts, making it easier to distribute space among items in a container, even when their size is unknown or dynamic.
+
+Here are some key concepts of the Flexbox model:
+
+1. Flex Container: The parent element where the flex items reside. You designate a container as a flex container by setting its display property to flex or inline-flex.
+
+1. Flex Items: The children of a flex container. These are the elements inside the container that you want to arrange.
+
+1. Main Axis: The primary axis along which flex items are laid out. It can be horizontal or vertical depending on the flex-direction property.
+
+1. Cross Axis: The axis perpendicular to the main axis. If the main axis is horizontal, the cross axis will be vertical, and vice versa.
+
+1. Properties:
+
+    - `flex-direction:` Determines the direction of the main axis (row, row-reverse, column, column-reverse).
+    - `justify-content:` Aligns flex items along the main axis (options include flex-start, flex-end, center, space-between, space-around, and space-evenly).
+    - `align-items:` Aligns flex items along the cross axis (options include stretch, flex-start, flex-end, center, and baseline).
+    - `align-content:` Aligns a flex container's lines within when there is extra space in the cross axis (applicable only if there's more than one line of items).
+    - `flex-wrap:` Specifies whether items should wrap onto multiple lines (nowrap, wrap, wrap-reverse).
+    - `flex:` A shorthand property for flex-grow, flex-shrink, and flex-basis, which determine how items grow, shrink, and what the initial size is.
+
+Flexbox is particularly useful for building responsive layouts, as it allows for elements to adjust their size and position based on the available space in the container.
+  </details>
+  <details>
+  <summary>
+  <h3>11. what are the main flex container</h3>
+  </summary>
+
+  In the Flexbox model, a flex container is the parent element that houses flex items. The flex container defines the context in which the layout and alignment of its child elements (the flex items) are managed.
+
+To create a flex container, you apply the CSS property display to an element with either the value flex or inline-flex. Here’s a brief overview of these two types:
+
+  1. `display: flex;:` This sets the element as a block-level flex container. The flex items will stretch to fill the full width of the parent container by default unless otherwise specified. The container itself behaves like a block-level element.
+
+  1. `display: inline-flex;`: This sets the element as an inline-level flex container. The flex items will be laid out in a line, and the container will only take up as much space as needed by its content, behaving like an inline element.
+
+**Key Properties of a Flex Container**
+
+Once an element is designated as a flex container, you can use several properties to control the layout of its flex items:
+
+- `flex-direction`: Sets the direction of the main axis, determining the direction in which the flex items are placed. It can be row, row-reverse, column, or column-reverse.
+
+- `flex-wrap:` Controls whether the flex items should wrap onto multiple lines. It can be nowrap (default, single line), wrap (items wrap to next line), or wrap-reverse (items wrap to next line in reverse order).
+
+- `justify-content:` Aligns flex items along the main axis. Options include flex-start, flex-end, center, space-between, space-around, and space-evenly.
+
+- `align-items:` Aligns flex items along the cross axis. It can be set to stretch (default), flex-start, flex-end, center, or baseline.
+
+- `align-content:` Aligns multiple lines of flex items along the cross axis. This property has an effect only if the flex container has been set to wrap multiple lines (i.e., if flex-wrap is set to wrap or wrap-reverse). Options include flex-start, flex-end, center, space-between, space-around, and stretch.
+
+These properties allow for a high degree of control over the layout, alignment, and distribution of space among flex items within a flex container.
+  </details>
+  <details>
+  <summary>
+  <h3></h3>
+  </summary>
+  </details>
+  <details>
+  <summary>
+  <h3></h3>
+  </summary>
+  </details>
+  <details>
+  <summary>
+  <h3></h3>
+  </summary>
+  </details>
+  <details>
+  <summary>
   <h3></h3>
   </summary>
   </details>

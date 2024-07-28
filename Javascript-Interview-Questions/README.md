@@ -4241,22 +4241,604 @@ Understanding these concepts allows for better management of variable visibility
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>48. what is reduce method</h3>
 </summary>
+
+The reduce() method in JavaScript is a powerful tool for transforming an array into a single value. This method applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.
+
+Syntax
+```js
+array.reduce(callback(accumulator, currentValue, currentIndex, array), initialValue)
+
+```
+- **callback**: The function to execute on each element in the array, taking four arguments:
+
+    - **accumulator**: The accumulator accumulates the callback's return values. It is the accumulated value previously returned in the last invocation of the callback, or initialValue if supplied.
+    - **currentValue**: The current element being processed in the array.
+    - **currentIndex**: The index of the current element being processed in the array. Starts from index 0 if initialValue is provided, otherwise from index 1.
+    - **array**: The array reduce was called upon.
+- **initialValue (optional):** A value to use as the first argument to the first call of the callback. If no initial value is supplied, the first element in the array will be used as the initial accumulator value and will skip the first element in the array as the currentValue.
+
+**Example: Sum of an Array**
+
+Here's a simple example that uses reduce() to find the sum of all numbers in an array:
+```js
+const numbers = [1, 2, 3, 4, 5];
+
+const sum = numbers.reduce((accumulator, currentValue) => {
+  return accumulator + currentValue;
+}, 0);
+
+console.log(sum); // Output: 15
+
+```
+In this example:
+
+  - The initialValue is 0, so the accumulator starts at 0.
+  - For each number in the numbers array, the function adds currentValue to accumulator, and the result becomes the new accumulator value.
+  - The process continues until all elements in the array have been processed, resulting in the sum of all numbers.
+
+**Example: Flattening an Array**
+
+The reduce() method can also be used to flatten an array of arrays:
+```js
+const nestedArray = [[1, 2], [3, 4], [5, 6]];
+
+const flatArray = nestedArray.reduce((accumulator, currentValue) => {
+  return accumulator.concat(currentValue);
+}, []);
+
+console.log(flatArray); // Output: [1, 2, 3, 4, 5, 6]
+
+```
+In this case:
+
+- The initialValue is an empty array [].
+- The concat method is used to merge each sub-array (currentValue) into the accumulator.
+- The result is a single flattened array.
+
+**Considerations**
+
+- If initialValue is not provided, reduce() starts with the second element in the array as currentValue and the first element as accumulator. This can lead to errors if the array is empty or if the operation is not commutative. Therefore, it's often a good practice to provide an initialValue.
+- reduce() can be used for a wide range of operations, such as finding the maximum value in an array, counting occurrences of elements, or even building complex data structures.
+
+The reduce() method is versatile and essential for functional programming patterns in JavaScript, allowing you to express a variety of algorithms in a concise and declarative way.
+
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>49. what is async/await </h3>
 </summary>
+
+async and await are key features in JavaScript that simplify working with asynchronous operations, such as fetching data from an API, reading files, or performing time-consuming calculations. These features are built on top of Promises and provide a more readable and manageable way to handle asynchronous code.
+
+**async Function**
+
+An async function is a function declared with the async keyword. It always returns a Promise, regardless of whether you explicitly return a value or not. If a value is returned from the async function, it is automatically wrapped in a resolved Promise. If an error is thrown inside the function, the returned Promise is rejected.
+
+Syntax:
+```js
+async function functionName() {
+  // function body
+}
+
+```
+**await Operator**
+
+The await operator is used inside async functions to pause the execution of the function until a Promise is resolved or rejected. It can only be used inside an async function and is typically used to wait for a Promise to resolve. When the Promise resolves, await returns the resolved value. If the Promise is rejected, await throws the rejected value.
+
+Syntax:
+```js
+let result = await promise;
+
+```
+**Example: Fetching Data with async/await**
+
+Here’s a simple example demonstrating how async and await work together to handle asynchronous operations:
+```js
+async function fetchData(url) {
+  try {
+    // Wait for the fetch operation to complete
+    let response = await fetch(url);
+    // Wait for the response to be converted to JSON
+    let data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+fetchData('https://jsonplaceholder.typicode.com/posts');
+
+```
+In this example:
+
+  - The fetchData function is declared as async, indicating it will handle asynchronous operations.
+  - The await keyword is used to wait for the fetch call to complete and return a response. This pauses the execution of the fetchData function until the Promise returned by fetch is resolved.
+  - Another await is used to wait for the response.json() method to complete, converting the response to JSON format.
+  - The try...catch block is used to handle any errors that might occur during the fetching or processing of data. If an error occurs, the catch block catches it and logs the error.
+
+**Benefits of async/await**
+
+1. Improved Readability: async/await allows you to write asynchronous code that looks and behaves like synchronous code, making it more readable and easier to understand.
+1. Error Handling: You can use try...catch blocks to handle errors, similar to synchronous code, making error handling more intuitive.
+1. Sequential Execution: await pauses the execution until the awaited Promise is resolved, allowing you to perform operations in sequence without nesting callback functions or chaining .then() calls.
+
+**Considerations**
+
+- Only Inside async Functions: The await keyword can only be used inside async functions. If you try to use it outside, you will get a syntax error.
+- Error Handling: Since await can throw errors if the Promise is rejected, it's important to use try...catch blocks to handle these errors and prevent unhandled rejections.
+- Asynchronous Execution: While async/await makes the code look synchronous, the underlying execution is still asynchronous, meaning it doesn't block the event loop.
+
+async and await provide a powerful and elegant way to manage asynchronous operations in JavaScript, improving both code readability and maintainability.
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>50. how does  async/awaut to handle asynchronous operation </h3>
 </summary>
+
+**How async/await Handles Asynchronous Code**
+
+1. Sequential Execution: async/await allows for sequential execution of asynchronous operations. When you use await, it pauses the execution of the code until the Promise is resolved. This is particularly useful when operations need to happen in a specific order.
+
+1. Error Handling: Using try...catch blocks with async/await makes error handling more intuitive and similar to synchronous code. If an awaited Promise is rejected, the error can be caught using a try...catch block.
+
+1. Promise Chaining Simplified: async/await simplifies the chaining of Promises. Instead of chaining .then() and .catch() methods, you can use multiple await statements and handle errors in a single try...catch block.
+
+**Example: Handling Asynchronous Code with async/await**
+```js
+async function fetchData(url) {
+  try {
+    const response = await fetch(url); // Wait for the fetch to complete
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json(); // Wait for the response to be parsed
+    console.log(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+fetchData('https://jsonplaceholder.typicode.com/posts');
+
+```
+In this example:
+
+- The fetchData function is marked with async, allowing the use of await within it.
+- The await keyword is used before the fetch and response.json() calls, pausing the function execution until these Promises resolve.
+- The try...catch block handles any errors that occur during the asynchronous operations, such as network issues or parsing errors.
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>51. what is immutability in javascript</h3>
+</summary>
+
+Immutability in JavaScript refers to the concept of ensuring that an object's state cannot be modified after it has been created. This means that once an immutable object is created, its properties and values cannot be changed, which helps prevent side effects and maintains data consistency.
+
+**Why Immutability Matters**
+
+1. **Predictability**: Immutable data structures are predictable because they do not change. This predictability simplifies debugging and reasoning about the code.
+1. **Functional Programming:** Immutability is a core concept in functional programming, where functions are pure (they do not have side effects) and data is immutable.
+1. **Concurrency**: Immutability helps in concurrent programming, as it prevents race conditions since data cannot change unexpectedly.
+1. **History/Undo:** Immutable data structures enable easy implementation of undo/redo functionality by keeping a history of past states.
+
+**Creating Immutable Data**
+
+In JavaScript, primitive values (such as numbers, strings, and booleans) are immutable by nature. However, objects and arrays are mutable, which means their properties or elements can be changed. To work with immutability in these cases, you can use different techniques:
+
+1. **Object.freeze():** This method makes an object immutable by preventing new properties from being added and existing properties from being changed or removed.
+```js
+const obj = Object.freeze({ name: 'Alice', age: 30 });
+obj.age = 31; // This will have no effect, obj remains { name: 'Alice', age: 30 }
+
+```
+However, Object.freeze() is shallow, meaning it does not freeze nested objects.
+
+2. **Copying and Updating:** Instead of modifying an object or array in place, you create a new object or array with the updated data. This can be done using methods like Object.assign() or the spread operator for objects and arrays.
+```js
+// For objects
+const original = { name: 'Alice', age: 30 };
+const updated = { ...original, age: 31 };
+
+console.log(updated); // { name: 'Alice', age: 31 }
+
+// For arrays
+const arr = [1, 2, 3];
+const newArr = [...arr, 4];
+
+console.log(newArr); // [1, 2, 3, 4]
+
+```
+3. **Immutable.js and Other Libraries:** Libraries like Immutable.js provide immutable data structures (Maps, Lists, etc.) that make it easier to work with immutability. They offer efficient operations and methods to work with immutable data structures.
+```js
+const { Map } = require('immutable');
+const map1 = Map({ a: 1, b: 2, c: 3 });
+const map2 = map1.set('b', 50);
+
+console.log(map1.get('b')); // 2
+console.log(map2.get('b')); // 50
+
+```
+**Immutability in Practice**
+
+Immutability is widely used in applications where state management is crucial, such as in front-end frameworks like React. In React, the concept of immutability is used to manage state changes more predictably and efficiently. For example, by comparing new and old states (which is straightforward when using immutable data), React can determine what has changed and update the UI accordingly.
+
+Immutability is an important concept in JavaScript, especially in functional programming and state management scenarios. It helps prevent unintended side effects, simplifies code reasoning, and can improve performance by enabling more efficient state comparisons.
+</details>
+<details>
+<summary>
+<h3>52. String manipulation methods</h3>
+</summary>
+
+String manipulation refers to the process of changing, parsing, or analyzing string data in programming. JavaScript offers a wide range of built-in methods to manipulate strings. Here are some common operations and methods for string manipulation:
+
+**Basic String Methods**
+1. **Concatenation**
+
+    - ` +` operator: Concatenates two strings.
+    - concat() method: Combines two or more strings.
+
+```js
+let str1 = "Hello";
+let str2 = "World";
+
+let combined1 = str1 + " " + str2; // "Hello World"
+let combined2 = str1.concat(" ", str2); // "Hello World"
+
+```
+2. Accessing Characters
+
+    - charAt(index): Returns the character at the specified index.
+    - Bracket notation (str[index]): Similar to charAt, returns the character at the specified index.
+```js
+let str = "Hello";
+let firstChar = str.charAt(0); // "H"
+let secondChar = str[1]; // "e"
+
+```
+3. Substrings
+
+    - slice(start, end): Extracts a section of the string and returns it as a new string.
+    - substring(start, end): Similar to slice, but cannot accept negative indices.
+    - substr(start, length): Extracts a substring from a string, starting at a specified position and continuing for a given number of characters.
+```js
+let str = "Hello World";
+
+let part1 = str.slice(0, 5); // "Hello"
+let part2 = str.substring(6, 11); // "World"
+let part3 = str.substr(6, 5); // "World"
+
+```
+4. Changing Case
+
+    - toUpperCase(): Converts the entire string to uppercase.
+    - toLowerCase(): Converts the entire string to lowercase.
+
+```js
+let str = "Hello World";
+
+let upperStr = str.toUpperCase(); // "HELLO WORLD"
+let lowerStr = str.toLowerCase(); // "hello world"
+
+```
+5. Replacing Substrings
+
+    - replace(searchValue, newValue): Replaces the first occurrence of searchValue with newValue.
+    - replaceAll(searchValue, newValue): Replaces all occurrences of searchValue with newValue.
+```js
+let str = "Hello World";
+
+let newStr = str.replace("World", "Everyone"); // "Hello Everyone"
+let allNewStr = str.replaceAll("o", "0"); // "Hell0 W0rld"
+
+```
+6. Trimming Strings
+
+    - trim(): Removes whitespace from both ends of a string.
+    - trimStart() / trimLeft(): Removes whitespace from the start of a string.
+    - trimEnd() / trimRight(): Removes whitespace from the end of a string.
+```js
+let str = "  Hello World  ";
+
+let trimmedStr = str.trim(); // "Hello World"
+let trimmedStartStr = str.trimStart(); // "Hello World  "
+let trimmedEndStr = str.trimEnd(); // "  Hello World"
+
+```
+7. Splitting Strings
+
+    - split(separator): Splits a string into an array of substrings, separated by a specified separator.
+```js
+let str = "Hello World";
+
+let words = str.split(" "); // ["Hello", "World"]
+
+```
+8. Finding Substrings
+
+    - indexOf(searchValue, fromIndex): Returns the index of the first occurrence of searchValue, starting the search at fromIndex.
+    - lastIndexOf(searchValue, fromIndex): Returns the index of the last occurrence of searchValue, starting the search at fromIndex.
+    - includes(searchValue): Checks if the string contains searchValue.
+    - startsWith(searchValue): Checks if the string starts with searchValue.
+    - endsWith(searchValue): Checks if the string ends with searchValue
+
+```js
+let str = "Hello World";
+
+let index1 = str.indexOf("o"); // 4
+let index2 = str.lastIndexOf("o"); // 7
+let contains = str.includes("World"); // true
+let starts = str.startsWith("Hello"); // true
+let ends = str.endsWith("World"); // true
+
+```
+9. Repeating Strings
+
+    - repeat(count): Returns a new string with the original string repeated count times
+```js
+let str = "Hello ";
+
+let repeatedStr = str.repeat(3); // "Hello Hello Hello "
+
+```
+**Practical Examples**
+
+1. Reverse a String
+```js
+let str = "Hello World";
+let reversedStr = str.split("").reverse().join("");
+console.log(reversedStr); // "dlroW olleH"
+
+```
+2. Count Occurrences of a Character
+```js
+let str = "Hello World";
+let count = str.split("o").length - 1;
+console.log(count); // 2
+
+```
+3. Capitalize the First Letter of Each Word
+```js
+let str = "hello world";
+let capitalizedStr = str.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+console.log(capitalizedStr); // "Hello World"
+
+```
+4. Extract Domain from Email
+```js
+let email = "user@example.com";
+let domain = email.substring(email.indexOf("@") + 1);
+console.log(domain); // "example.com"
+
+```
+These are just a few examples of the many string manipulation techniques available in JavaScript. Using these methods, you can efficiently handle and transform string data for various applications.
+</details>
+<details>
+<summary>
+<h3>53. how can this methods be used to format user input data</h3>
+</summary>
+
+Formatting user input data using string manipulation methods in JavaScript is a common task, especially when dealing with forms, user data, and other inputs that require validation and standardization. Here are some practical examples of how you can use these methods to format user input:
+
+1. **Trimming Whitespace**
+
+Users often input data with leading or trailing spaces. You can use the trim() method to remove these unnecessary spaces:
+```js
+let userInput = "   John Doe   ";
+let formattedInput = userInput.trim();
+console.log(formattedInput); // "John Doe"
+
+```
+2. **Capitalizing Names**
+
+To ensure proper formatting, you might want to capitalize the first letter of each name. This can be done using a combination of split(), map(), and join():
+```js
+let userName = "john doe";
+let formattedName = userName.split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+console.log(formattedName); // "John Doe"
+
+```
+3. **Formatting Phone Numbers**
+
+If users input phone numbers in different formats, you can standardize them. For example, converting numbers like "1234567890" into "(123) 456-7890":
+```js
+let phoneNumber = "1234567890";
+let formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+console.log(formattedPhoneNumber); // "(123) 456-7890"
+
+```
+4. **Validating and Formatting Email Addresses**
+
+For email addresses, you can ensure they are in lowercase (as email addresses are case-insensitive) and trim any unnecessary whitespace:
+```js
+let emailInput = "   ExAmPle@Domain.com   ";
+let formattedEmail = emailInput.trim().toLowerCase();
+console.log(formattedEmail); // "example@domain.com"
+
+```
+5. **Normalizing Case for Usernames**
+
+Usernames might need to be in a specific case (e.g., all lowercase) to ensure consistency:
+```js
+let usernameInput = "UserName123";
+let formattedUsername = usernameInput.toLowerCase();
+console.log(formattedUsername); // "username123"
+
+```
+6. **Removing Special Characters**
+
+Sometimes user inputs need to be sanitized by removing special characters. This can be done using regular expressions with replace():
+```js
+let rawInput = "Hello! This is a @test.";
+let sanitizedInput = rawInput.replace(/[^a-zA-Z0-9 ]/g, '');
+console.log(sanitizedInput); // "Hello This is a test"
+
+```
+7. **Converting to a Standard Date Format**
+
+If users input dates in various formats, you can normalize them to a standard format (e.g., YYYY-MM-DD):
+```js
+let dateInput = "07/28/2024"; // MM/DD/YYYY format
+let formattedDate = dateInput.split("/").reverse().join("-");
+console.log(formattedDate); // "2024-28-07"
+
+```
+8. **Extracting Information**
+
+You can extract specific parts of user input, such as the domain from an email address:
+```js
+let email = "user@example.com";
+let domain = email.split('@')[1];
+console.log(domain); // "example.com"
+
+```
+**Combining Methods**
+
+Often, you will need to combine several of these methods to fully process and format user input. For example, normalizing a name and removing extra spaces might involve:
+```js
+let rawName = "   john    DOE   ";
+let formattedName = rawName.trim().split(/\s+/).map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+console.log(formattedName); // "John Doe"
+
+```
+**Summary**
+
+These methods are crucial for ensuring data consistency, validation, and user experience. Proper formatting can prevent errors, improve search functionality, and enhance the overall quality of data processing in applications.
+</details>
+<details>
+<summary>
+<h3>54. what is DOMContentLoad event</h3>
+</summary>
+
+The DOMContentLoaded event in JavaScript is a key event that occurs when the HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading. This event is particularly useful when you want to execute JavaScript code that interacts with the DOM as soon as the document structure is ready, but before all external resources (like images) have fully loaded.
+
+**When to Use DOMContentLoaded**
+
+- **DOM Manipulation:** If you need to manipulate the DOM elements or content as soon as they are available, DOMContentLoaded is the right event to use. This ensures that your script can access and manipulate the DOM elements without waiting for the entire page (including styles, images, etc.) to load.
+- **Performance**: It helps improve the perceived performance of your web page because scripts can run sooner, without waiting for slower resources to load.
+
+**Example Usage**
+
+Here's an example of how to use the DOMContentLoaded event:
+```js
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("The DOM is fully loaded and parsed");
+    
+    // Example: Change the text content of a paragraph
+    let paragraph = document.getElementById("myParagraph");
+    if (paragraph) {
+        paragraph.textContent = "The DOM is ready!";
+    }
+});
+
+```
+In this example:
+
+- document.addEventListener("DOMContentLoaded", callback) is used to register an event listener for the DOMContentLoaded event.
+- The callback function is executed as soon as the DOM is fully loaded and parsed, allowing access to DOM elements such as the paragraph with the ID myParagraph.
+- The paragraph's text content is changed only after the DOM is ready, ensuring that the element exists and can be manipulated.
+
+**Differences Between DOMContentLoaded and load**
+
+It's important to distinguish DOMContentLoaded from the load event:
+
+- DOMContentLoaded: Fired when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
+- load: Fired when the entire page, including all dependent resources such as stylesheets and images, has finished loading.
+Using DOMContentLoaded is often preferable when you want to start interacting with the DOM as soon as possible, rather than waiting for the entire page to load.
+
+Example of Using load
+```js
+window.addEventListener("load", function() {
+    console.log("The entire page including styles and images has fully loaded");
+    
+    // Example: Change the background image
+    document.body.style.backgroundImage = "url('background.jpg')";
+});
+
+```
+In this example, the load event ensures that the background image is set only after all resources, including images, are fully loaded.
+
+**Best Practices**
+
+1. Placement of Scripts: To avoid blocking the rendering of the page, it's often recommended to place your `<script>` tags at the bottom of the `<body>` or to use the defer or async attributes when including external scripts. However, when using DOMContentLoaded, the exact placement becomes less critical as the script runs once the DOM is ready.
+
+1. Avoiding Inline Scripts: While you can use inline scripts to perform immediate actions, it's generally better to separate your JavaScript from HTML for maintainability and to improve caching and performance.
+
+1. Fallback for Older Browsers: While DOMContentLoaded is widely supported in modern browsers, older versions of Internet Explorer (below IE9) don't support it. In those cases, you might need to use alternative methods or polyfills to achieve similar functionality.
+
+The DOMContentLoaded event is a key tool for efficiently handling DOM manipulation and ensuring scripts execute at the appropriate time in the page loading process.
+
+</details>
+<details>
+<summary>
+<h3>55. what is key? Why use</h3>
+</summary>
+
+In JavaScript, especially within the context of React and other UI frameworks, keys are unique identifiers assigned to elements or components within a list. They are primarily used to help the framework efficiently manage and update the UI when the data underlying the list changes. Here’s a deeper look into what keys are, their importance, and best practices:
+
+**What Are Keys?**
+
+Keys are special string attributes you include when creating lists of elements. For instance, in React, you often see them used in the context of mapping over an array to render a list of components:
+```js
+const listItems = items.map((item) =>
+  <li key={item.id}>{item.name}</li>
+);
+
+```
+In this example, each li element is given a key attribute that corresponds to item.id.
+
+**Why Use Keys?**
+
+1. Efficient Updates
+
+    - Keys help React (or other frameworks) identify which items have changed, are added, or are removed. Without keys, React would need to re-render all components in a list whenever there’s a change, which can be inefficient.
+    - With keys, React can quickly match the current list with the new list of items, allowing it to update only the elements that have changed. This improves the performance and responsiveness of the application.
+1. Preserving Component State
+
+    - When a component in a list changes position but retains the same key, React maintains the component’s state. For example, if a user is typing in an input field within a list item, and the list is reordered, React can preserve the text in the input field as long as the key remains the same.
+1. Avoiding Index-based Keys
+
+    - It’s generally advised against using array indices as keys, especially if the list is dynamic (i.e., items can be added, removed, or reordered). This is because index-based keys can lead to incorrect component reordering and loss of state. For example, if you have a list of items and you insert a new item at the start, using indices as keys will cause all subsequent components to be re-rendered unnecessarily.
+
+**Best Practices for Using Keys**
+
+1. Use Unique Identifiers
+
+    - Preferably, use unique identifiers that are intrinsic to the data, such as a unique ID property. This ensures that each key remains consistent and unique across renders.
+1. Stable Keys
+
+    - Ensure that keys are stable, meaning they don’t change between renders unless the underlying data changes. This stability allows React to correctly manage component updates and maintain state.
+1. Avoid Index Keys for Dynamic Lists
+
+    - Avoid using array indices as keys, particularly for dynamic lists where items can be added, removed, or reordered. This can lead to bugs and inefficient re-renders.
+1. Descriptive Keys in Development
+
+    - While not necessary for production, using more descriptive keys during development can help with debugging and understanding the structure of your components.
+Example: Using Keys in a List
+```js
+const todos = [
+  { id: 1, text: 'Learn JavaScript' },
+  { id: 2, text: 'Learn React' },
+  { id: 3, text: 'Build a project' }
+];
+
+const todoItems = todos.map(todo => (
+  <li key={todo.id}>{todo.text}</li>
+));
+
+```
+In this example, the id property from each todo object is used as the key, ensuring that each list item is uniquely identified.
+
+**Summary**
+
+Keys are essential in frameworks like React for efficiently managing and updating lists of elements. They help in preserving component state and improving performance by minimizing unnecessary re-renders. When using keys, it's crucial to choose unique and stable values, typically from the data itself, to ensure consistent and predictable behavior. Avoid using array indices as keys in dynamic lists to prevent potential issues with state management and reordering.
+</details>
+<details>
+<summary>
+<h3>56. </h3>
 </summary>
 </details>
 <details>
