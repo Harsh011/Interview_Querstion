@@ -624,8 +624,31 @@ function sum(x, y) {
 
 <details>
 <summary>
-<h3></h3>
+<h3>11. merge two values</h3>
 </summary>
+
+```js
+console.log(merge("abcdef", "123"));  // a1b2c3def
+console.log(merge("abc", "123456"));  // a1b2c3456
+function merge(num1, num2){
+    let maxLength = Math.max(num1.length, num2.length)
+    // console.log(maxLength)
+    let result = ''
+
+    for (let i = 0; i < maxLength; i++) {
+        if(i < num1.length){
+            result += num1[i]
+        }
+
+        if(i < num2.length){
+            result += num2[i]
+        }
+        
+    }
+
+    return result
+}
+```
 </details>
 <details>
 <summary>
