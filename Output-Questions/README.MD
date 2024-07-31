@@ -652,13 +652,119 @@ function merge(num1, num2){
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>12. Polyfill call, apply and bind</h3>
 </summary>
+
+polyfill Call
+```js
+const person1 = {
+  name: "John",
+};
+
+const person2 = {
+  name: "Sam",
+};
+
+function greet(age) {
+  console.log(
+    `Hello, my name is ${this.name} and I am ${age} years old `
+  );
+}
+
+unction.prototype.myCall = function (obj = {}, ...args) {
+  if (typeof this !== "function") {
+    throw new Error("not capable to call");
+  }
+
+  obj.fn = this;
+  obj.fn(...args);
+};
+
+greet.myCall(person1, 26);
+greet.myCall(person2, 28);
+```
+
+polyfill apply
+```js
+const person1 = {
+  name: "John",
+};
+
+const person2 = {
+  name: "Sam",
+};
+
+function greet(age) {
+  console.log(
+    `Hello, my name is ${this.name} and I am ${age} years old `
+  );
+}
+Function.prototype.myApply = function (obj = {}, ...args) {
+  if (typeof this !== "function") {
+    throw new Error("not capable to call");
+  }
+
+  if (!Array.isArray(...args)) {
+    throw new Error("TypeError: CreateListFromArrayLike called on non-object");
+  }
+  obj.fn = this;
+  obj.fn(...args);
+};
+
+greet.myApply(person1, [29]);
+```
+
+polyfill bind
+```js
+const person1 = {
+  name: "John",
+};
+
+const person2 = {
+  name: "Sam",
+};
+
+function greet(age, years) {
+  console.log(
+    `Hello, my name is ${this.name} and I am ${age} years old and ${years} born.`
+  );
+}
+
+Function.prototype.myBind = function (obj = {}, ...args1) {
+  if (typeof this !== "function") {
+    throw new Error("not capable to call");
+  }
+
+  obj.fn = this;
+  return function (...args2) {
+    obj.fn(...args1, ...args2);
+  };
+};
+
+const myFunc = greet.myBind(person1, 28);
+myFunc(1998);
+```
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>13. Two Sum</h3>
 </summary>
+
+```js
+function TwoSum(num1, target) {
+  for (let i = 0; i < num1.length; i++) {
+    for (let j = i + 1; j < num1.length; j++) {
+      if (num1[i] + num1[j] === target) {
+        return [i, j];
+      }
+    }
+  }
+  return null;
+}
+const nums1 = [2, 7, 11, 15];
+const target1 = 9;
+console.log(TwoSum(nums1, target1));  //[0, 1]
+```
 </details>
 <details>
 <summary>
