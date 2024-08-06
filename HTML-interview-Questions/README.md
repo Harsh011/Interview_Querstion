@@ -248,8 +248,10 @@ In this example:
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>5. What is iframe</h3>
 </summary>
+
+An `<iframe>` (short for inline frame) is an HTML element that allows you to embed another HTML document within the current document. Essentially, it creates a "window" within your webpage through which you can display content from another webpage or a different part of your own site.
 </details>
 <details>
 <summary>

@@ -5698,16 +5698,69 @@ function DecrementButton({ count, setCount }) {
 Lifting state is a fundamental concept in React that promotes better state management, clearer data flow, and component reusability. By ensuring that state is managed in the appropriate component and shared where necessary, you can build more maintainable and scalable React applications.
 
 
-
-
-
-
-
 </details>
 <details>
 <summary>
-<h3></h3>
+<h3>61. why fetch inside useEffect</h3>
 </summary>
+
+Using fetch inside the useEffect hook in React is a common pattern for making API calls or fetching data when a component mounts or updates. Here’s why it’s used:
+
+1. Side Effects Management: useEffect is designed to handle side effects in React components, and fetching data from an API is a side effect. This keeps side effects separate from the main render logic, maintaining cleaner and more predictable code.
+
+1. Component Lifecycle: Placing fetch inside useEffect ensures that the API call happens at specific points in the component's lifecycle, typically after the component mounts. This mimics the behavior of lifecycle methods like componentDidMount in class components.
+
+1. Dependency Array: The second argument to useEffect is a dependency array. This array allows you to specify when the effect should run. For example, an empty array ([]) ensures the effect runs only once, when the component mounts. Including dependencies in the array lets the effect re-run when those dependencies change.
+
+1. Cleanup: useEffect can return a cleanup function. This is useful for canceling fetch requests or cleaning up resources when the component unmounts, preventing memory leaks and ensuring proper resource management.
+
+Here’s an example of using fetch inside useEffect:
+```js
+import React, { useEffect, useState } from 'react';
+
+function DataFetchingComponent() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://api.example.com/data');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty array means this effect runs once, after the initial render
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  
+  return (
+    <div>
+      <h1>Fetched Data</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
+}
+
+export default DataFetchingComponent;
+
+```
+In this example:
+
+- useEffect triggers the fetchData function once when the component mounts.
+- The fetchData function handles the API call, updating the component's state based on the response.
+- The component renders differently based on the state of the data fetch (loading, error, or success).  
 </details>
 <details>
 <summary>
